@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Exam;
+use App\Http\Requests\ExamRequest;
 use Illuminate\Http\Request;
 
 class ExamController extends Controller
@@ -13,7 +15,13 @@ class ExamController extends Controller
      */
     public function index()
     {
-        //
+        $exams = Exam::all();
+        $exams = Exam::where('enable', 1)
+            ->orderBy('created_at', 'desc')
+            ->paginate(3);
+
+        return view('exam.index', ['exams' => $exams]);
+
     }
 
     /**
@@ -23,7 +31,8 @@ class ExamController extends Controller
      */
     public function create()
     {
-        //
+        return view('exam.create');
+
     }
 
     /**
@@ -32,9 +41,12 @@ class ExamController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ExamRequest $request)
     {
-        //
+        //dd($request->all());
+
+        Exam::create($request->all());
+        return redirect()->route('exam.index');
     }
 
     /**

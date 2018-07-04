@@ -11,14 +11,12 @@
 |
  */
 
-Route::get('/', function () {
-    return view('welcome')->with('name', 'chuntn')->with('say', '嗨！');
-});
+Route::get('/', 'ExamController@index')->name('index');
+Route::get('/home', 'ExamController@index')->name('home');
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
-
-Route::get('/exam/create', function () {
-    return view('exam.create');
-})->name('exam.create');
+Route::get('/exam', 'ExamController@index')->name('exam.index');
+Route::get('/exam/create', 'ExamController@create')->name('exam.create');
+Route::post('/exam', 'ExamController@store')->name('exam.store');
+Route::get('/exam/{id}', 'ExamController@show')->name('exam.show');
