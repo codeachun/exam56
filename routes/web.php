@@ -24,3 +24,5 @@ Route::post('/exam', 'ExamController@store')->name('exam.store');
 Route::get('/exam/{exam}', 'ExamController@show')->name('exam.show');
 
 Route::get('/exam/{id}', 'ExamController@show')->name('exam.show')->where('id', '[0-9]+');
+
+Route::post('/topic', 'TopicController@store')->name('topic.store');
