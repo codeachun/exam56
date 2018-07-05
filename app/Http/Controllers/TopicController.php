@@ -37,7 +37,6 @@ class TopicController extends Controller
     {
         $topic = Topic::create($request->all());
         return redirect()->route('exam.show', $topic->exam_id);
-
     }
 
     /**
@@ -59,10 +58,8 @@ class TopicController extends Controller
      */
     public function edit(Topic $topic)
     {
-        $method = 'patch';
-        $action = "/topic/" . $topic->id;
-        $exam   = $topic->exam;
-        return view('exam.show', compact('exam', 'topic', 'method', 'action'));
+        $exam = $topic->exam;
+        return view('exam.show', compact('exam', 'topic'));
     }
 
     /**

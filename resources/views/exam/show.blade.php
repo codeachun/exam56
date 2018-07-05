@@ -5,7 +5,8 @@
     <a href="{{ route('exam.edit', $exam->id) }}" class="btn btn-warning">編輯</a> @endcan
 </h1>
 
-@can('建立測驗') {{ bs()->openForm('post', '/topic') }} {{ bs()->formGroup() ->label('題目內容', false, 'text-sm-right') ->control(bs()->textarea('topic')->placeholder('請輸入題目內容'))
+@can('建立測驗') @if(isset($topic)) {{ bs()->openForm('patch', "/topic/{$topic->id}", ['model' => $topic]) }} @else {{ bs()->openForm('post',
+'/topic') }} @endif {{ bs()->formGroup() ->label('題目內容', false, 'text-sm-right') ->control(bs()->textarea('topic')->placeholder('請輸入題目內容'))
 ->showAsRow() }} {{ bs()->formGroup() ->label('選項1', false, 'text-sm-right') ->control(bs()->text('opt1')->placeholder('輸入選項1'))
 ->showAsRow() }} {{ bs()->formGroup() ->label('選項2', false, 'text-sm-right') ->control(bs()->text('opt2')->placeholder('輸入選項2'))
 ->showAsRow() }} {{ bs()->formGroup() ->label('選項3', false, 'text-sm-right') ->control(bs()->text('opt3')->placeholder('輸入選項3'))
