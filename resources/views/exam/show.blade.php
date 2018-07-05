@@ -1,14 +1,8 @@
 @extends('layouts.app') 
 @section('content')
 <h1 class="text-center">
-    {{$exam->title}}
-
-    @can('建立測驗')
-        <a href="{{route('exam.edit', $exam->id)}}" class="btn btn-warning">編輯</a> 
-    @endcan
-
-
-
+    {{$exam->title}} @can('建立測驗')
+    <a href="{{ route('exam.edit', $exam->id) }}" class="btn btn-warning">編輯</a> @endcan
 </h1>
 
 @can('建立測驗') {{ bs()->openForm('post', '/topic') }} {{ bs()->formGroup() ->label('題目內容', false, 'text-sm-right') ->control(bs()->textarea('topic')->placeholder('請輸入題目內容'))
@@ -18,20 +12,19 @@
 ->showAsRow() }} {{ bs()->formGroup() ->label('選項4', false, 'text-sm-right') ->control(bs()->text('opt4')->placeholder('輸入選項4'))
 ->showAsRow() }} {{ bs()->formGroup() ->label('正確解答', false, 'text-sm-right') ->control(bs()->select('ans',[1=>1, 2=>2, 3=>3,
 4=>4])->placeholder('請設定正確解答')) ->showAsRow() }} {{ bs()->hidden('exam_id', $exam->id) }} {{ bs()->formGroup() ->label('')
-->control(bs()->submit('儲存')) ->showAsRow() }} {{ bs()->closeForm() }} @endcan
-
-@if(Auth::id())
+->control(bs()->submit('儲存')) ->showAsRow() }} {{ bs()->closeForm() }} @endcan @if(Auth::id())
 <dl>
     @forelse ($exam->topics as $key => $topic)
     <dt>
-                <h3>
-                @can('建立測驗')
-                    （{{$topic->ans}}）
-                @endcan
-                {{ bs()->badge()->text($key+1) }}
-                {{$topic->topic}}
-                </h3>
-            </dt>
+                    <h3>
+                    @can('建立測驗')
+                        <a href="{{ route('topic.edit', $topic->id) }}" class="btn btn-sm btn-warning">編輯</a>
+                        （{{$topic->ans}}）
+                    @endcan
+                    {{ bs()->badge()->text($key+1) }}
+                    {{$topic->topic}}
+                    </h3>
+                </dt>
     <dd>
         {{ bs()->radioGroup("ans[$topic->id]", [ 1=>"
         <span class='opt'>&#10102; $topic->opt1</span>", 2=>"

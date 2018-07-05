@@ -57,9 +57,12 @@ class TopicController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Topic $topic)
     {
-        //
+        $method = 'patch';
+        $action = "/topic/" . $topic->id;
+        $exam   = $topic->exam;
+        return view('exam.show', compact('exam', 'topic', 'method', 'action'));
     }
 
     /**
@@ -69,9 +72,10 @@ class TopicController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Topic $topic)
     {
-        //
+        $topic->update($request->all());
+        return redirect()->route('exam.show', $topic->exam_id);
     }
 
     /**
